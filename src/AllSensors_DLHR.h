@@ -31,9 +31,9 @@ See the LICENSE file for more details.
 #define ALLSENSORS_DLHR_H
 
 #include <stdint.h>
-
 #include <Wire.h>
-
+#include <SPI.h>
+ 
 class AllSensors_DLHR {
 public:
 
@@ -107,8 +107,14 @@ private:
 
   // The value of a full scale temperature or pressure, 2^24.
   static constexpr uint32_t FULL_SCALE_REF = (uint32_t) 1 << FULL_SCALE_RESOLUTION;
+  
+  void spiXfer(uint8_t cmd,uint8_t len);
 
-  TwoWire *bus;
+  	TwoWire *bus = NULL;
+	SPISettings *spiSettings = NULL;
+	uint8_t cspin = 0;
+	uint8_t bufr[8];	// Buffer for SPI read/write
+  
   SensorType type;
   SensorResolution pressure_resolution;
   float pressure_max;
@@ -178,7 +184,9 @@ public:
   }
 
   AllSensors_DLHR(TwoWire *bus, SensorType type, SensorResolution pressure_resolution, float pressure_max);
-
+  void initDLHR(SensorType type,SensorResolution pressure_resolution, float pressure_max);
+  AllSensors_DLHR(uint8_t CSPin,SensorType type, SensorResolution pressure_resolution, float pressure_max);
+  
   // Set the configured pressure unit for data output (the default is inH2O).
   void setPressureUnit(PressureUnit pressure_unit) {
     this->pressure_unit = pressure_unit;

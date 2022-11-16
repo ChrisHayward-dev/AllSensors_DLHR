@@ -3,6 +3,16 @@
 #ifndef ALLSENSORS_DLHR_SUBCLASSES_H
 #define ALLSENSORS_DLHR_SUBCLASSES_H
 
+class AllSensors_SPI_DLHR_F05D_8 : public AllSensors_DLHR {
+public:
+ AllSensors_SPI_DLHR_F05D_8(uint8_t CSPin) : AllSensors_DLHR(CSPin, AllSensors_DLHR::SensorType::DIFFERENTIAL, AllSensors_DLHR::SensorResolution::RESOLUTION_18_BITS, 0.5) {}
+ };
+class AllSensors_SPI_DLHR_L01D_8 : public AllSensors_DLHR {
+public:
+ AllSensors_SPI_DLHR_L01D_8(uint8_t CSPin) : AllSensors_DLHR(CSPin, AllSensors_DLHR::SensorType::DIFFERENTIAL, AllSensors_DLHR::SensorResolution::RESOLUTION_18_BITS, 1.0) {}
+ };
+
+
 class AllSensors_DLHR_F05D_6 : public AllSensors_DLHR {
 public:
   AllSensors_DLHR_F05D_6(TwoWire *bus) : AllSensors_DLHR(bus, AllSensors_DLHR::SensorType::DIFFERENTIAL, AllSensors_DLHR::SensorResolution::RESOLUTION_16_BITS, 0.5) {}
